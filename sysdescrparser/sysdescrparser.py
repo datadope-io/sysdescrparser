@@ -14,7 +14,9 @@ from cisco_ios import CiscoIOS
 from cisco_nxos import CiscoNXOS
 from cisco_iosxe import CiscoIOSXE
 from cisco_iosxr import CiscoIOSXR
+from cisco_fxos import CiscoFXOS
 from mikrotik_routeros import MikroTikRouterOS
+from netapp import NetApp
 from juniper_junos import JuniperJunos
 from juniper_screenos import JuniperScreenOS
 from brocade_ironware import BrocadeIronWare
@@ -23,6 +25,7 @@ from brocade_networkos import BrocadeNetworkOS
 from foundry_ironware import FoundryIronWare
 from arista_eos import AristaEOS
 from hp_procurve import HPProCurve
+from hp_storage import HPStorage
 from extreme_xos import ExtremeXOS
 from paloalto_panos import PaloAltoPANOS
 from a10_acos import A10ACOS
@@ -117,8 +120,19 @@ def sysdescrparser(sysdescr):
     if obj.parse():
         return obj
     #
+    # cisco fxos
+    #
+    obj = CiscoFXOS(sysdescr)
+    if obj.parse():
+        return obj
+    #
     # mikrotik routeros
     obj = MikroTikRouterOS(sysdescr)
+    if obj.parse():
+        return obj
+    #
+    # netapp
+    obj = NetApp(sysdescr)
     if obj.parse():
         return obj
     #
@@ -173,6 +187,12 @@ def sysdescrparser(sysdescr):
     # hp procurve
     #
     obj = HPProCurve(sysdescr)
+    if obj.parse():
+        return obj
+    #
+    # hp storage
+    #
+    obj = HPStorage(sysdescr)
     if obj.parse():
         return obj
     #
